@@ -1,7 +1,5 @@
 function getComputerChoice() {
-
     let a = Math.floor(Math.random()*3);
-
     switch(a) {
         case 0:
             return "rock";
@@ -13,118 +11,94 @@ function getComputerChoice() {
             return "scissors";
             break;
         default:
-            return "error";
-    } 
-
-}
-
-function playRound(computerSelection) {
-
-let winMessage = "Congratulations you win!";
-let loseMessage = "You lose.";
-let tieMessage = "It's a tie.";
-let errorMessage = "Error please try again.";
-
-let playerSelection = prompt("Please choose one of the following: Rock, Paper, Scissors");
-
-playerSelection = playerSelection.toLowerCase();
-
-console.log("your selection: "+playerSelection);
-console.log("computer selection: "+computerSelection);
-
-    if(checkPlayerSelection(playerSelection)) {
-
-        switch(playerSelection) {
-
-            case "rock":
-
-                switch(computerSelection) {
-
-                    case "rock":
-                        return tieMessage;
-
-                    case "paper":
-                        return loseMessage;
-                        break;
-
-                    case "scissors":
-                        return winMessage;
-                        break;
-                    
-                    default: 
-                        return errorMessage;
-
-                }
-                break;
-
-                case "paper":
-
-                switch(computerSelection) {
-
-                    case "rock":
-                        return winMessage;
-
-                    case "paper":
-                        return tieMessage;
-                        break;
-
-                    case "scissors":
-                        return loseMessage;
-                        break;
-                    
-                    default: 
-                        return errorMessage;
-
-                }
-                break;
-
-                case "scissors":
-
-                switch(computerSelection) {
-
-                    case "rock":
-                        return loseMessage;
-
-                    case "paper":
-                        return winMessage;
-                        break;
-
-                    case "scissors":
-                        return tieMessage;
-                        break;
-                    
-                    default: 
-                        return errorMessage;
-
-                }
-                break;
-            
-            default:
-                return errorMessage;
-
-        }
-
-    } else {
-     
-        return "That is not a valid selection. Please try again."
-
+            return "ERROR";
     }
-
 }
 
-function checkPlayerSelection(playerSelection) {
+function playRound(computerSelection, playerSelection) {
+
+    let winMessage = "Congratulations you win!";
+    let loseMessage = "You lose.";
+    let tieMessage = "It's a tie.";
+    let errorMessage = "Error please try again.";
+
+    console.log("your selection: "+playerSelection);
+    console.log("computer selection: "+computerSelection);
 
     switch(playerSelection) {
         case "rock":
+            switch(computerSelection) {
+                case "rock":
+                    return tieMessage;
+                case "paper":
+                    return loseMessage;
+                    break;
+                case "scissors":
+                    return winMessage;
+                    break;                    
+                default: 
+                    return errorMessage;
+                }
+            break;
         case "paper":
+            switch(computerSelection) {
+                case "rock":
+                    return winMessage;
+                    break;
+                case "paper":
+                    return tieMessage;
+                    break;
+                case "scissors":
+                    return loseMessage;
+                    break;
+                default: 
+                    return errorMessage;
+            }
+            break;
         case "scissors":
-            return true;
+            switch(computerSelection) {
+                case "rock":
+                    return loseMessage;
+                case "paper":
+                    return winMessage;
+                    break;
+                case "scissors":
+                    return tieMessage;
+                    break;
+                default: 
+                    return errorMessage;
+            }
             break;
         default:
-            return false;
-
+            return errorMessage;
     }
+} //end of playRound function
 
-}
+let buttonRock = document.querySelector('#rock');
+let buttonPaper = document.querySelector('#paper');
+let buttonScissors = document.querySelector('#scissors');
 
-console.log(playRound(getComputerChoice()));
+let playerSelection;
+
+buttonRock.addEventListener('click', () => {
+    playerSelection = "rock";
+    buttonRock.classList.add('selected');
+    console.log(playerSelection);
+    console.log(playRound(getComputerChoice(), playerSelection));
+});
+
+buttonPaper.addEventListener('click', () => {
+    playerSelection = "paper";
+    buttonPaper.classList.add('selected');
+    console.log(playerSelection);
+    console.log(playRound(getComputerChoice(), playerSelection));
+});
+
+buttonScissors.addEventListener('click', () => {
+    playerSelection = "Scissors";
+    buttonScissors.classList.add('selected');
+    console.log(playerSelection);
+    console.log(playRound(getComputerChoice(), playerSelection));
+});
+
+//console.log(playRound(getComputerChoice()));
