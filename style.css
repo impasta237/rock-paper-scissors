@@ -1,0 +1,27 @@
+body {
+    font-size: 16px;
+    margin: 0px;
+}
+
+.player-selection-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+#rock, #paper, #scissors {
+    font-size: 24px;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 200px;
+    min-height: 75px;
+    background-color: grey;
+}
+
+#rock.selected, #paper.selected, #scissors.selected {
+    background-color: lightgreen;
+    border: none;
+}
