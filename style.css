@@ -3,6 +3,11 @@ body {
     margin: 0px;
 }
 
+img {
+    width: 200px;
+    height: auto;
+}
+
 .player-selection-button-container {
     display: flex;
     flex-direction: row;
@@ -14,14 +19,11 @@ body {
 #rock, #paper, #scissors {
     font-size: 24px;
     border: none;
-    border-radius: 8px;
     padding: 8px;
-    min-width: 200px;
-    min-height: 75px;
-    background-color: grey;
+    background-color: white;
+    margin: 16px;
 }
 
 #rock.selected, #paper.selected, #scissors.selected {
-    background-color: lightgreen;
-    border: none;
+    transform: scale(1.2);
 }
