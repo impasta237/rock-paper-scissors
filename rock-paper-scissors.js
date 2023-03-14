@@ -13,7 +13,7 @@ function getComputerChoice() {
         default:
             return "ERROR";
     }
-}
+} //end getComputerChoice function
 
 function playRound(computerSelection, playerSelection) {
 
@@ -22,8 +22,8 @@ function playRound(computerSelection, playerSelection) {
     let tieMessage = "It's a tie.";
     let errorMessage = "Error please try again.";
 
-    console.log("your selection: "+playerSelection);
-    console.log("computer selection: "+computerSelection);
+    console.log("your selection: "+playerSelection); //console log
+    console.log("computer selection: "+computerSelection); //console log
 
     switch(playerSelection) {
         case "rock":
@@ -74,31 +74,92 @@ function playRound(computerSelection, playerSelection) {
     }
 } //end of playRound function
 
+function selected(button, choice) {
+    button.classList.add('selected');
+    
+    let computerChoice = getComputerChoice();
+    
+    console.log(choice); //console log
+    console.log(playRound(computerChoice, choice));
+
+
+    endRoundMessage(playRound(computerChoice,choice), computerChoice, choice);
+}
+
+
 let buttonRock = document.querySelector('#rock');
 let buttonPaper = document.querySelector('#paper');
 let buttonScissors = document.querySelector('#scissors');
 
-let playerSelection;
-
 buttonRock.addEventListener('click', () => {
     playerSelection = "rock";
-    buttonRock.classList.add('selected');
-    console.log(playerSelection);
-    console.log(playRound(getComputerChoice(), playerSelection));
+    selected(buttonRock, playerSelection);
 });
 
 buttonPaper.addEventListener('click', () => {
     playerSelection = "paper";
-    buttonPaper.classList.add('selected');
-    console.log(playerSelection);
-    console.log(playRound(getComputerChoice(), playerSelection));
+    selected(buttonPaper, playerSelection);
 });
 
 buttonScissors.addEventListener('click', () => {
-    playerSelection = "Scissors";
-    buttonScissors.classList.add('selected');
-    console.log(playerSelection);
-    console.log(playRound(getComputerChoice(), playerSelection));
+    playerSelection = "scissors";
+    selected(buttonScissors, playerSelection);
 });
 
-//console.log(playRound(getComputerChoice()));
+function resetGame(button, body, box, message1, message2, message3) {
+    button.addEventListener('click', () => {
+
+        let buttonRock = document.querySelector('#rock');
+        let buttonPaper = document.querySelector('#paper');
+        let buttonScissors = document.querySelector('#scissors');
+
+        buttonRock.disabled = false;
+        buttonPaper.disabled = false;
+        buttonScissors.disabled = false;
+
+        buttonRock.classList.remove('selected');
+        buttonPaper.classList.remove('selected');
+        buttonScissors.classList.remove('selected');
+
+        box.removeChild(message1);
+        box.removeChild(message2);
+        box.removeChild(message3);
+        box.removeChild(button);
+        body.removeChild(box);
+    
+    })
+}
+
+function endRoundMessage(message, computerChoice, playerChoice) {
+    const endRoundMessageContainer = document.createElement('div');
+    endRoundMessageContainer.classList.add('end-round-message-container');
+
+    const endRoundMessageDisplay = document.createElement('div');
+    endRoundMessageDisplay.classList.add('end-round-message');
+    endRoundMessageDisplay.textContent = message;
+
+    const endRoundMessagePlayerChoice = document.createElement('div');
+    endRoundMessagePlayerChoice.classList.add('end-round-message-player-choice');
+    endRoundMessagePlayerChoice.textContent = "You chose: " + playerChoice;
+
+    const endRoundMessageComputerChoice = document.createElement('div');
+    endRoundMessageComputerChoice.classList.add('end-round-message-computer-choice');
+    endRoundMessageComputerChoice.textContent = "The computer chose: " + computerChoice;
+
+    const endRoundResetButton = document.createElement('button');
+    endRoundResetButton.classList.add('end-round-reset-button');
+    endRoundResetButton.textContent = "Reset";
+
+    const body = document.querySelector('body');
+    body.appendChild(endRoundMessageContainer);
+    endRoundMessageContainer.appendChild(endRoundMessageDisplay);
+    endRoundMessageContainer.appendChild(endRoundMessagePlayerChoice);
+    endRoundMessageContainer.appendChild(endRoundMessageComputerChoice);
+    endRoundMessageContainer.appendChild(endRoundResetButton);
+
+    document.querySelector('#rock').disabled = true;
+    document.querySelector('#paper').disabled = true;
+    document.querySelector('#scissors').disabled = true;
+
+    resetGame(endRoundResetButton, body, endRoundMessageContainer, endRoundMessageDisplay, endRoundMessagePlayerChoice, endRoundMessageComputerChoice);
+}

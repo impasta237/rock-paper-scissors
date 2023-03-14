@@ -4,6 +4,8 @@ body {
     font-size: 16px;
     margin: 0px;
     font-family: Nunito, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 img {
@@ -24,7 +26,8 @@ img {
     font-weight: 400;
     display: flex;
     justify-content: center;
-    margin: 24px;
+    margin-top: 16px;
+    margin-bottom: 0px;
 }
 
 #rock, #paper, #scissors {
@@ -37,4 +40,22 @@ img {
 
 #rock.selected, #paper.selected, #scissors.selected {
     transform: scale(1.2);
+}
+
+.end-round-message-container {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgrey;
+    margin-top: 24px;
+    align-items: center;
+    margin-right: 200px;
+    margin-left: 200px;
+    border: 1px solid black;
+    border-radius: 16px;
+    padding: 12px;
+    gap: 8px;
+}
+
+.end-round-message-player-choice, .end-round-message-computer-choice {
+    display: flex;
 }
