@@ -114,25 +114,22 @@ const endRoundResetButton = document.createElement('button');
 endRoundResetButton.classList.add('end-round-reset-button');
 endRoundResetButton.textContent = "Reset";
 
-function resetGame() {
-    endRoundResetButton.addEventListener('click', () => {
+endRoundResetButton.addEventListener('click', () => {
+    buttonRock.disabled = false;
+    buttonPaper.disabled = false;
+    buttonScissors.disabled = false;
 
-        buttonRock.disabled = false;
-        buttonPaper.disabled = false;
-        buttonScissors.disabled = false;
+    buttonRock.classList.remove('selected');
+    buttonPaper.classList.remove('selected');
+    buttonScissors.classList.remove('selected');
 
-        buttonRock.classList.remove('selected');
-        buttonPaper.classList.remove('selected');
-        buttonScissors.classList.remove('selected');
+    endRoundMessageContainer.removeChild(endRoundMessageDisplay);
+    endRoundMessageContainer.removeChild(endRoundMessagePlayerChoice);
+    endRoundMessageContainer.removeChild(endRoundMessageComputerChoice);
+    endRoundMessageContainer.removeChild(endRoundResetButton);
+    body.removeChild(endRoundMessageContainer); 
+});
 
-        endRoundMessageContainer.removeChild(endRoundMessageDisplay);
-        endRoundMessageContainer.removeChild(endRoundMessagePlayerChoice);
-        endRoundMessageContainer.removeChild(endRoundMessageComputerChoice);
-        endRoundMessageContainer.removeChild(endRoundResetButton);
-        body.removeChild(endRoundMessageContainer);
-    
-    })
-}
 
 function endRoundMessage(message, computerChoice, playerChoice) {
     endRoundMessageDisplay.textContent = message;
@@ -148,6 +145,4 @@ function endRoundMessage(message, computerChoice, playerChoice) {
     buttonRock.disabled = true;
     buttonPaper.disabled = true;
     buttonScissors.disabled = true;
-
-    resetGame();
 }
