@@ -22,9 +22,6 @@ function playRound(computerSelection, playerSelection) {
     let tieMessage = "It's a tie.";
     let errorMessage = "Error please try again.";
 
-    console.log("your selection: "+playerSelection); //console log
-    console.log("computer selection: "+computerSelection); //console log
-
     switch(playerSelection) {
         case "rock":
             switch(computerSelection) {
@@ -76,42 +73,49 @@ function playRound(computerSelection, playerSelection) {
 
 function selected(button, choice) {
     button.classList.add('selected');
-    
     let computerChoice = getComputerChoice();
-    
-    console.log(choice); //console log
-    console.log(playRound(computerChoice, choice));
-
-
     endRoundMessage(playRound(computerChoice,choice), computerChoice, choice);
 }
 
-
+//create variables of existing html elements
+let body = document.querySelector('body');
 let buttonRock = document.querySelector('#rock');
 let buttonPaper = document.querySelector('#paper');
 let buttonScissors = document.querySelector('#scissors');
 
+//button click events to set player selection
 buttonRock.addEventListener('click', () => {
     playerSelection = "rock";
     selected(buttonRock, playerSelection);
 });
-
 buttonPaper.addEventListener('click', () => {
     playerSelection = "paper";
     selected(buttonPaper, playerSelection);
 });
-
 buttonScissors.addEventListener('click', () => {
     playerSelection = "scissors";
     selected(buttonScissors, playerSelection);
 });
 
-function resetGame(button, body, box, message1, message2, message3) {
-    button.addEventListener('click', () => {
+//create temporary div elements for round summary popup box
+const endRoundMessageContainer = document.createElement('div');
+endRoundMessageContainer.classList.add('end-round-message-container');
 
-        let buttonRock = document.querySelector('#rock');
-        let buttonPaper = document.querySelector('#paper');
-        let buttonScissors = document.querySelector('#scissors');
+const endRoundMessageDisplay = document.createElement('div');
+endRoundMessageDisplay.classList.add('end-round-message');
+
+const endRoundMessagePlayerChoice = document.createElement('div');
+endRoundMessagePlayerChoice.classList.add('end-round-message-player-choice');
+
+const endRoundMessageComputerChoice = document.createElement('div');
+endRoundMessageComputerChoice.classList.add('end-round-message-computer-choice');
+
+const endRoundResetButton = document.createElement('button');
+endRoundResetButton.classList.add('end-round-reset-button');
+endRoundResetButton.textContent = "Reset";
+
+function resetGame() {
+    endRoundResetButton.addEventListener('click', () => {
 
         buttonRock.disabled = false;
         buttonPaper.disabled = false;
@@ -121,45 +125,29 @@ function resetGame(button, body, box, message1, message2, message3) {
         buttonPaper.classList.remove('selected');
         buttonScissors.classList.remove('selected');
 
-        box.removeChild(message1);
-        box.removeChild(message2);
-        box.removeChild(message3);
-        box.removeChild(button);
-        body.removeChild(box);
+        endRoundMessageContainer.removeChild(endRoundMessageDisplay);
+        endRoundMessageContainer.removeChild(endRoundMessagePlayerChoice);
+        endRoundMessageContainer.removeChild(endRoundMessageComputerChoice);
+        endRoundMessageContainer.removeChild(endRoundResetButton);
+        body.removeChild(endRoundMessageContainer);
     
     })
 }
 
 function endRoundMessage(message, computerChoice, playerChoice) {
-    const endRoundMessageContainer = document.createElement('div');
-    endRoundMessageContainer.classList.add('end-round-message-container');
-
-    const endRoundMessageDisplay = document.createElement('div');
-    endRoundMessageDisplay.classList.add('end-round-message');
     endRoundMessageDisplay.textContent = message;
-
-    const endRoundMessagePlayerChoice = document.createElement('div');
-    endRoundMessagePlayerChoice.classList.add('end-round-message-player-choice');
     endRoundMessagePlayerChoice.textContent = "You chose: " + playerChoice;
-
-    const endRoundMessageComputerChoice = document.createElement('div');
-    endRoundMessageComputerChoice.classList.add('end-round-message-computer-choice');
     endRoundMessageComputerChoice.textContent = "The computer chose: " + computerChoice;
 
-    const endRoundResetButton = document.createElement('button');
-    endRoundResetButton.classList.add('end-round-reset-button');
-    endRoundResetButton.textContent = "Reset";
-
-    const body = document.querySelector('body');
     body.appendChild(endRoundMessageContainer);
     endRoundMessageContainer.appendChild(endRoundMessageDisplay);
     endRoundMessageContainer.appendChild(endRoundMessagePlayerChoice);
     endRoundMessageContainer.appendChild(endRoundMessageComputerChoice);
     endRoundMessageContainer.appendChild(endRoundResetButton);
 
-    document.querySelector('#rock').disabled = true;
-    document.querySelector('#paper').disabled = true;
-    document.querySelector('#scissors').disabled = true;
+    buttonRock.disabled = true;
+    buttonPaper.disabled = true;
+    buttonScissors.disabled = true;
 
-    resetGame(endRoundResetButton, body, endRoundMessageContainer, endRoundMessageDisplay, endRoundMessagePlayerChoice, endRoundMessageComputerChoice);
+    resetGame();
 }
